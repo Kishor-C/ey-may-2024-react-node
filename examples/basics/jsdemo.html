@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Learning Javascript</h1>
+    <div id="main"></div>
+    <button onclick="updateContent()">Click</button>
+    <div id="root"></div>
+    <button onclick="updateContent2()">Click2</button>
+    <script>
+      var counter = 0;
+      function updateContent() {
+        var element = document.getElementById("main");
+        counter = counter + 1;
+        element.innerHTML = "<p>Counter = " + counter + "</p>";
+      }
+      function updateContent2() {
+        var root = document.getElementById("root");
+        counter = counter + 2;
+        root.innerHTML = `<p>Hello Counter: ${counter}</p>`;
+      }
+    </script>
+  </body>
+</html>

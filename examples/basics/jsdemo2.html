@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      let items = [20, 30, 10, 50, 40];
+      let element = document.getElementById("root");
+      let content = "";
+      let newItems = items.map((v, i) => v + 10);
+      newItems.forEach((v, i) => (content = `${content}<p>v = ${v}</p>`));
+      element.innerHTML = content;
+      //   let newItems = items.map(function (v, i) {
+      //     return v + 5;
+      //   });
+      //   newItems.forEach(function (v, i) {
+      //     content = `${content} <p>New Value is: ${v}</p>`;
+      //   });
+      //   element.innerHTML = content;
+      //   items.forEach(function (v, i) {
+      //     content = `${content} <p>Value at ${i} is ${v}</p>`;
+      //   });
+      //   element.innerHTML = content;
+    </script>
+  </body>
+</html>
