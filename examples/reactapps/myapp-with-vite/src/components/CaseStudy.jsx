@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, Routes, Route, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 export function ProfileSuccess() {
   // extracts value from /success/1, success/2 & so on
@@ -16,6 +17,16 @@ export function ProfileSuccess() {
 export function ProfileLogin() {
   let [profileId, setProfileId] = useState("");
   let [password, setPassword] = useState("");
+
+  // a code to test the axios library using fake api
+  let handleClick = (e) => {
+    let FAKE_URL = "https://jsonplaceholder.typicode.com/users";
+    axios
+      .get(FAKE_URL)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+  };
+
   // useNavigate() to navigate to the components programmatically
   let navigate = useNavigate();
   let handleSubmit = (e) => {
@@ -69,6 +80,12 @@ export function ProfileLogin() {
           />
         </div>
       </form>
+      <div>
+        <h3>Fake API Testing</h3>
+        <button className="btn btn-secondary" onClick={handleClick}>
+          Users
+        </button>
+      </div>
     </div>
   );
 }
