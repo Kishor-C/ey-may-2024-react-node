@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, Routes, Route, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-
+import { Buffer } from "buffer";
 export function ProfileSuccess() {
   // extracts value from /success/1, success/2 & so on
   let { profileId } = useParams();
@@ -31,14 +31,15 @@ export function ProfileLogin() {
   let navigate = useNavigate();
   let handleSubmit = (e) => {
     e.preventDefault(); // inbuilt function that stops reloading the page on submit
-    if (profileId != 0) {
-      navigate(`/success/${profileId}`); // matches to /success/:profileId
-    } else {
-      alert("Sorry id or password is incorrect");
-      setProfileId("");
-      setPassword("");
-      navigate("/login");
-    }
+    // encode the profileId & password using Buffer in base64
+    let encodedValue = Buffer.from(profileId + ":" + password).toString("base64");
+    let URL = "http://localhost:9999/profiles";
+    // call the webservice by passing this encodedValue in the authorization header
+    // get(URL, headers)
+    axios
+      .get(URL, { headers: { Authorization: "Basic " + encodedValue } })
+      .then((r) => navigate("/success/" + profileId))
+      .catch((e) => alert(e.response.data.message));
   };
   return (
     <div>
@@ -116,10 +117,23 @@ export function ProfileRegistration() {
     if (password != confirmPassword) {
       alert("Password and Confirm Password must match");
     } else {
-      alert(
-        `Name=${name}, Phone=${phone}, Dob=${dob}, Email=${email} 
-            and others should be sent to the backend`
-      );
+      let reqBody = {
+        _id: parseInt(profileId),
+        name: name,
+        password: password,
+        dob: dob,
+        phone: phone,
+        email: email,
+      };
+      let BE_URL = "http://localhost:9999/profiles";
+      axios
+        .post(BE_URL, reqBody)
+        .then((s) => {
+          console.log(s.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     }
   };
   return (
